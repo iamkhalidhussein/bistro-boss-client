@@ -1,22 +1,15 @@
+import {Link} from 'react-router-dom';
 
 const Navbar = () => {
     const navOptions = <>
-        <li><a>Item 1</a></li>
-            <li>
-                <details>
-                <summary>Parent</summary>
-                <ul className="p-2">
-                    <li><a>Submenu 1</a></li>
-                    <li><a>Submenu 2</a></li>
-                </ul>
-                </details>
-            </li>
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/menu">Our Menu</Link></li>
         <li><a>Item 3</a></li>
     </>
 
     return (
         <div>
-            <div className="navbar max-w-screen-xl fixed z-10 bg-opacity-0 bg-base-100">
+            <div className="navbar max-w-screen-xl fixed text-white z-10 bg-opacity-0 bg-base-100">
                 <div className="navbar-start">
                     <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -26,7 +19,7 @@ const Navbar = () => {
                         {navOptions}
                     </ul>
                     </div>
-                    <a className="btn btn-ghost text-[24px] text-white font-bold">BISTRO BOSS</a>
+                    <Link to="/" className="btn btn-ghost text-[24px] text-white font-bold">BISTRO BOSS</Link>
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">
