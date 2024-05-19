@@ -1,14 +1,19 @@
+import { Helmet } from 'react-helmet';
 import {Link} from 'react-router-dom';
 
 const Navbar = () => {
     const navOptions = <>
         <li><Link to="/">Home</Link></li>
         <li><Link to="/menu">Our Menu</Link></li>
-        <li><Link to="/order">Order Food</Link></li>
+        <li><Link to="/order/salad">Order Food</Link></li>
+        <li><Link to="/login">Login</Link></li>
     </>
 
     return (
         <div>
+            <Helmet>
+                <title>Bistro Boss | Order Food</title>
+            </Helmet>
             <div className="navbar max-w-screen-xl fixed text-white z-10 bg-opacity-0 bg-base-100">
                 <div className="navbar-start">
                     <div className="dropdown">
