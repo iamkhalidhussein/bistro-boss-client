@@ -22,25 +22,30 @@ const SignUp = () => {
                     <label className="label">
                         <span className="label-text">Name</span>
                     </label>
-                    <input type="text" {...register('name')} placeholder="Name" name="name" className="input input-bordered" required />
+                    <input type="text" {...register('name', {required: true})} placeholder="Name" name="name" className="input input-bordered" />
+                    {errors.name && <span className='text-red-300'>This field is required</span>}
                     </div>
                     <div className="form-control">
                     <label className="label">
                         <span className="label-text">Email</span>
                     </label>
-                    <input type="email" {...register('email')} placeholder="Your Email" name="email" className="input input-bordered" required />
+                    <input type="email" {...register('email', {required: true})} placeholder="Your Email" name="email" className="input input-bordered"  />
+                    {errors.email && <span className='text-red-300'>This field is required</span>}
                     </div>
                     <div className="form-control">
                     <label className="label">
                         <span className="label-text">Password</span>
                     </label>
-                    <input type="password" {...register('password')} placeholder="Password" name="password" className="input input-bordered" required />
+                    <input type="password" {...register('password', {required: true, maxLength: 10, pattern: /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"/})} placeholder="Password" name="password" className="input input-bordered" />
+                    {errors.password?.type === 'required' && <span className='text-red-300'>A six characters password is required</span>}
+                    {errors.password?.type === 'maxLength' && <span className='text-red-300'>Maximum lenght of password 10</span>}
+                    {errors.password?.type === 'password' && <span className='text-red-300'>Password shoule be contain one uppercase and one lowercase and a especial character</span>}
                     <label className="label">
                         <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                     </label>
                     </div>
                     <div className="form-control mt-6">
-                    <button className="btn btn-primary">SignUp</button>
+                        <input className='btn btn-primary' type="submit" value="Sign Up" />
                     </div>
                 </form>
                 </div>
