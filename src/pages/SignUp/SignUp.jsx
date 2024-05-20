@@ -1,16 +1,28 @@
+import { useContext } from 'react';
+import { Helmet } from 'react-helmet';
 import {useForm} from 'react-hook-form';
+import { AuthContext } from '../../providers/AuthProvider';
 
 const SignUp = () => {
-    const {register, handleSubmit, watch, formState: {errors}} = useForm();
+    const {register, handleSubmit,  formState: {errors}} = useForm();
+    const {createUser} = useContext(AuthContext);
 
     const onSubmit = data => {
+        console.log('i am clicking')
         console.log(data);
+        createUser(data.email, data.password)
+        .then((result) => {
+            const loggedUser = result.user;
+            console.log(loggedUser);
+        })
     }
 
-    console.log(watch('example'));
-
     return (
-        <div className="hero min-h-screen bg-base-200">
+        <div>
+            <Helmet>
+                <title>Bistro Boss || Sign Up</title>
+            </Helmet>
+            <div className="hero min-h-screen bg-base-200">
             <div className="hero-content flex-col lg:flex-row-reverse">
                 <div className="text-center lg:text-left">
                 <h1 className="text-5xl font-bold">Sign up now!</h1>
@@ -36,7 +48,7 @@ const SignUp = () => {
                     <label className="label">
                         <span className="label-text">Password</span>
                     </label>
-                    <input type="password" {...register('password', {required: true, maxLength: 10, pattern: /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"/})} placeholder="Password" name="password" className="input input-bordered" />
+                    <input type="password" {...register('password', {required: true})}  placeholder="Password" name="password" className="input input-bordered" />
                     {errors.password?.type === 'required' && <span className='text-red-300'>A six characters password is required</span>}
                     {errors.password?.type === 'maxLength' && <span className='text-red-300'>Maximum lenght of password 10</span>}
                     {errors.password?.type === 'password' && <span className='text-red-300'>Password shoule be contain one uppercase and one lowercase and a especial character</span>}
@@ -50,6 +62,7 @@ const SignUp = () => {
                 </form>
                 </div>
             </div>
+        </div>
         </div>
     );
 };
