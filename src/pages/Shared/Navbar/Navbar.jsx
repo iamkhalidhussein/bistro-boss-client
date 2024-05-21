@@ -1,13 +1,33 @@
+import { useContext } from 'react';
 import { Helmet } from 'react-helmet';
 import {Link} from 'react-router-dom';
+import { AuthContext } from '../../../providers/AuthProvider';
 
 const Navbar = () => {
-    const navOptions = <>
+    const {user, logOut} = useContext(AuthContext);
+    const handleLogOut = () => {    
+        logOut()
+        .then((result) => {
+            console.log(result)
+        })
+        .catch((error) => {
+            console.log(error.message)
+        })
+    }
+    const navOptions = <div className='flex items-center'>
         <li><Link to="/">Home</Link></li>
         <li><Link to="/menu">Our Menu</Link></li>
         <li><Link to="/order/salad">Order Food</Link></li>
-        <li><Link to="/login">Login</Link></li>
-    </>
+        <li><Link to="/secret">Secret</Link></li>
+        {
+            user ? <>
+                <button onClick={handleLogOut} className='btn btn-ghost'>LogOut</button>
+            </> :
+            <>
+                <li><Link to="/login">Login</Link></li>
+            </>
+        }
+    </div>
 
     return (
         <div>

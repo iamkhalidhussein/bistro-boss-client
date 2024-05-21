@@ -1,12 +1,18 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import { AuthContext } from '../../providers/AuthProvider';
-import {Link} from 'react-router-dom';
+import {Link, useLocation, useNavigate} from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import Swal from 'sweetalert2'
+
 
 const Login = () => {
     const capchaRef = useRef(null);
     const [disabled, setDisabled] = useState(true);
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const from = location.state?.from?.pathname || '/';
 
     const {signIn} = useContext(AuthContext);
 
@@ -25,12 +31,31 @@ const Login = () => {
         .then((result) => {
             const user = result.user;
             console.log(user);
+            Swal.fire({
+                title: "User Login Successfull",
+                    showClass: {
+                    popup: `
+                        animate__animated
+                        animate__fadeInUp
+                        animate__faster
+                    `
+                    },
+                    hideClass: {
+                    popup: `
+                        animate__animated
+                        animate__fadeOutDown
+                        animate__faster
+                    `
+                    }
+                });
+                navigate(from, {replace: true});
         })
     }
 
-    const handleValidateCapcha = () => {
+    const handleValidateCapcha = (e) => {
+        e.preventDefault();
         const user_capcha_value = capchaRef.current.value;
-        console.log(user_capcha_value);
+        // console.log(user_capcha_value);
         if(validateCaptcha(user_capcha_value)) {
             setDisabled(false);
         }
@@ -78,7 +103,7 @@ const Login = () => {
                         <input disabled={disabled} type="submit" value="Login" className="btn btn-primary"/>
                     </div>
                 </form>
-                <p><small>New Here? <Link to="/signup">Create an Account</Link></small></p>
+                <p className='text-center'><small>New Here? <Link to="/signup">Create an Account</Link></small></p>
                 </div>
             </div>
             </div>
