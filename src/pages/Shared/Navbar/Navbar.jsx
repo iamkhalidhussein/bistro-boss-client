@@ -1,14 +1,21 @@
 import { useContext } from 'react';
 import { Helmet } from 'react-helmet';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import { AuthContext } from '../../../providers/AuthProvider';
+import { FiShoppingCart } from "react-icons/fi";
+import useCart from '../../../hooks/useCart'
 
 const Navbar = () => {
     const {user, logOut} = useContext(AuthContext);
+    const navigate = useNavigate();
+    const [carts] = useCart();
+
     const handleLogOut = () => {    
         logOut()
         .then((result) => {
             console.log(result)
+            navigate('/');
+
         })
         .catch((error) => {
             console.log(error.message)
@@ -19,6 +26,8 @@ const Navbar = () => {
         <li><Link to="/menu">Our Menu</Link></li>
         <li><Link to="/order/salad">Order Food</Link></li>
         <li><Link to="/secret">Secret</Link></li>
+        <li><Link to="/"><button className="btn"><FiShoppingCart /><div className="badge badge-secondary">{carts.length}</div></button>
+        </Link></li>
         {
             user ? <>
                 <button onClick={handleLogOut} className='btn btn-ghost'>LogOut</button>
@@ -52,7 +61,19 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <a className="btn">Button</a>
+                {user ? (
+                        user.photoURL ? (
+                            <img className='w-[50px] h-[50px] rounded-full' src={user.photoURL} alt="User Profile" />
+                        ) : (
+                            <div></div>
+                        )
+                    ) : (
+                        <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                        <div className="w-10 rounded-full">
+                            <img alt="Tailwind CSS Navbar component" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                            </div>
+                        </div>
+                    )}
                 </div>
                 </div>
         </div>
