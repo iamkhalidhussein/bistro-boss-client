@@ -4,8 +4,13 @@ import {useForm} from 'react-hook-form';
 import { AuthContext } from '../../providers/AuthProvider';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
+import SocialLogin from '../../components/SocialLogin/SocialLogin';
+
 
 const SignUp = () => {
+    const axiosPublic = useAxiosPublic();
+
     const {register, handleSubmit,  formState: {errors}} = useForm();
     const {createUser, updateUserProfile, logOut} = useContext(AuthContext);
     const navigate = useNavigate();
@@ -20,21 +25,31 @@ const SignUp = () => {
 
             updateUserProfile(data.name, data.photoURL)
             .then(() => {
-                console.log('user profile info updated');
-                Swal.fire({
-                    title: "Success!",
-                    text: "User created Successfully.",
-                    icon: "success"
-                });
-
-                logOut()
-                .then((result) => {
-                    console.log(result);
+                // console.log('user profile info updated');
+                const userInfo = {
+                    name: data.name,
+                    email: data.email
+                }
+                axiosPublic.post('/users', userInfo)
+                .then((res) => {
+                    if(res.data.insertedId) {
+                        console.log('user added to the database')
+                        Swal.fire({
+                            title: "Success!",
+                            text: "User created Successfully.",
+                            icon: "success"
+                        });
+        
+                        logOut()
+                        .then((result) => {
+                            console.log(result);
+                        })
+                        .catch((error) => {
+                            console.log(error.message);
+                        })
+                        navigate('/login');        
+                    }
                 })
-                .catch((error) => {
-                    console.log(error.message);
-                })
-                navigate('/login');
             })
             .catch((error) => console.log(error))
         })
@@ -91,6 +106,7 @@ const SignUp = () => {
                     </div>
                 </form>
                 <p className='text-center'><small>Already have an account? <Link to="/login">Login</Link></small></p>
+                <SocialLogin></SocialLogin>
                 </div>
             </div>
         </div>

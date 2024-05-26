@@ -44,7 +44,7 @@ const Cart = () => {
                 <table className="table w-full">
                     {/* head */}
                     <thead>
-                    <tr>
+                    <tr className="bg-gray-300 text-black">
                         <th>Serial</th>
                         <th>Image</th>
                         <th>Name</th>

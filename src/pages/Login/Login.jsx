@@ -4,6 +4,7 @@ import { AuthContext } from '../../providers/AuthProvider';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Swal from 'sweetalert2'
+import SocialLogin from '../../components/SocialLogin/SocialLogin';
 
 
 const Login = () => {
@@ -105,6 +106,7 @@ const Login = () => {
                     </div>
                 </form>
                 <p className='text-center'><small>New Here? <Link to="/signup">Create an Account</Link></small></p>
+            <SocialLogin></SocialLogin>
                 </div>
             </div>
             </div>
