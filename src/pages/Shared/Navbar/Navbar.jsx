@@ -4,10 +4,12 @@ import {Link, useNavigate} from 'react-router-dom';
 import { AuthContext } from '../../../providers/AuthProvider';
 import { FiShoppingCart } from "react-icons/fi";
 import useCart from '../../../hooks/useCart'
+import useAdmin from '../../../hooks/useAdmin';
 
 const Navbar = () => {
     const {user, logOut} = useContext(AuthContext);
     const navigate = useNavigate();
+    const [isAdmin] = useAdmin();
     const [carts] = useCart();
 
     const handleLogOut = () => {    
@@ -25,7 +27,21 @@ const Navbar = () => {
         <li><Link to="/">Home</Link></li>
         <li><Link to="/menu">Our Menu</Link></li>
         <li><Link to="/order/salad">Order Food</Link></li>
-        <li><Link to="/secret">Secret</Link></li>
+
+        {
+            // user ? 'true' : 'false'
+            // user ? condition ? 'double true' : 'one true' : 'false'
+        }
+
+        {
+            user && isAdmin && <li><Link to="/dashboard/adminHome">Dashboard</Link></li>
+
+        }
+        {
+            user && !isAdmin && <li><Link to="/dashboard/userHome">Dashboard</Link></li>
+
+        }
+
         <li><Link to="/dashboard/cart"><button className="btn"><FiShoppingCart /><div className="badge badge-secondary">{carts.length}</div></button>
         </Link></li>
         {
