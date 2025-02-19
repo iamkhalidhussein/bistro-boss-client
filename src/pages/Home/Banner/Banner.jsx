@@ -2,10 +2,10 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { Carousel } from 'react-responsive-carousel';
 import jpg1 from '../../../assets/home/01.jpg';
 import jpg2 from '../../../assets/home/02.jpg';
-import jpg3 from '../../../assets/home/03.png';
+import jpg3 from '../../../assets/home/03.jpg';
 import jpg4 from '../../../assets/home/04.jpg';
-import jpg5 from '../../../assets/home/05.png';
-import jpg6 from '../../../assets/home/06.png';
+import jpg5 from '../../../assets/home/05.jpg';
+import jpg6 from '../../../assets/home/06.jpg';
 
 const Banner = () => {
     return (

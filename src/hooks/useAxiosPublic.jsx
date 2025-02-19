@@ -1,7 +1,8 @@
 import axios from 'axios';
+
 const axiosPublic = axios.create({
-    baseURL: 'https://bistro-boss-server-sigma-ruddy.vercel.app'
-})
+    baseURL: import.meta.env.VITE_SERVER_URL,
+});
 
 const useAxiosPublic = () => {
     return axiosPublic;

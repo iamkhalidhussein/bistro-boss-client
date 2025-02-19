@@ -1,6 +1,8 @@
+import { Suspense, lazy } from "react";
 import {
     createBrowserRouter,
 } from "react-router-dom";
+
 import Main from "../Layout/Main/Main";
 import Home from "../pages/Home/Home/Home";
 import Menu from "../pages/Menu/Menu/Menu";
@@ -9,17 +11,19 @@ import Login from "../pages/Login/Login";
 import SignUp from "../pages/SignUp/SignUp";
 import PrivateRoute from "./PrivateRoute";
 import Secret from '../pages/Secret/Secret';
-import Dashboard from "../Layout/Dashboard/Dashboard";
-import Cart from "../pages/Dashboard/Dashboard/Cart/Cart";
-import AllUsers from "../Layout/Dashboard/AllUsers/AllUsers";
-import AddItems from "../Layout/Dashboard/AddItems/AddItems";
+
+const Dashboard = lazy(() => import("../Layout/Dashboard/Dashboard"));
+const Cart = lazy(() => import("../pages/Dashboard/Dashboard/Cart/Cart"));
+const AllUsers = lazy(() => import("../Layout/Dashboard/AllUsers/AllUsers"));
+const AddItems = lazy(() => import("../Layout/Dashboard/AddItems/AddItems"));
+const ManageItems = lazy(() => import("../pages/Dashboard/ManageItems/ManageItems"));
+const UpdateItem = lazy(() => import("../pages/Dashboard/UpdateItem/UpdateItem"));
+const Payment = lazy(() => import("../pages/Dashboard/Payment/Payment"));
+const PaymentHistory = lazy(() => import("../pages/Dashboard/PaymentHistory/PaymentHistory"));
+const UserHome = lazy(() => import("../pages/Dashboard/UserHome/UserHome"));
 import AdminRoute from '../Routes/AdminRoute'
-import ManageItems from "../pages/Dashboard/ManageItems/ManageItems";
-import UpdateItem from "../pages/Dashboard/UpdateItem/UpdateItem";
-import Payment from "../pages/Dashboard/Payment/Payment";
-import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
-import UserHome from "../pages/Dashboard/UserHome/UserHome";
 import AdminHome from "../pages/Dashboard/AdminHome/AdminHome";
+import { Review } from '@/pages/Dashboard/Dashboard/review/review';
 
 export const router = createBrowserRouter([
     {
@@ -54,48 +58,91 @@ export const router = createBrowserRouter([
     },
     {
         path: '/dashboard',
-        element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
+        element: <PrivateRoute>
+                    <Suspense fallback={'loading'}>
+                        <Dashboard/>
+                    </Suspense>
+                </PrivateRoute>,
         children: [
             //normal user routes
             {
                 path: 'userHome',
-                element: <UserHome></UserHome>
+                element: <Suspense><UserHome/></Suspense>
+            },
+            {
+                path: 'review',
+                element: <PrivateRoute>
+                            <Suspense>
+                                <Review/>
+                            </Suspense>
+                        </PrivateRoute>
             },
             {
                 path: 'cart',
-                element: <PrivateRoute><Cart></Cart></PrivateRoute>
+                element: (
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <PrivateRoute><Cart /></PrivateRoute>
+                    </Suspense>
+                )
             },
             {
                 path: 'payment',
-                element: <Payment></Payment>
+                element: (
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <Payment />
+                    </Suspense>
+                )
             },
             {
                 path: 'paymentHistory',
-                element: <PaymentHistory></PaymentHistory>
+                element: (
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <PaymentHistory />
+                    </Suspense>
+                )
             },
-            
-            //admin only routes
+        
+            // Admin only routes
             {
                 path: 'adminHome',
-                element: <AdminRoute><AdminHome></AdminHome></AdminRoute>
+                element: (
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <AdminRoute><AdminHome /></AdminRoute>
+                    </Suspense>
+                )
             },
             {
                 path: 'addItems',
-                element: <AdminRoute><AddItems></AddItems></AdminRoute>
+                element: (
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <AdminRoute><AddItems /></AdminRoute>
+                    </Suspense>
+                )
             },
-
             {
                 path: 'users',
-                element: <AdminRoute><AllUsers></AllUsers></AdminRoute>
+                element: (
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <AdminRoute><AllUsers /></AdminRoute>
+                    </Suspense>
+                )
             },
             {
                 path: 'manageItems',
-                element: <AdminRoute><ManageItems></ManageItems></AdminRoute>
+                element: (
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <AdminRoute><ManageItems /></AdminRoute>
+                    </Suspense>
+                )
             },
             {
                 path: 'updateItem/:id',
-                element: <AdminRoute><UpdateItem></UpdateItem></AdminRoute>,
-                loader: ({params}) => fetch(`https://bistro-boss-server-sigma-ruddy.vercel.app/menu/${params.id}`)
+                element: (
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <AdminRoute><UpdateItem /></AdminRoute>
+                    </Suspense>
+                ),
+                loader: ({ params }) => fetch(`https://bistro-boss-server-sigma-ruddy.vercel.app/menu/${params.id}`)
             }
         ]
     }

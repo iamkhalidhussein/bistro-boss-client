@@ -27,27 +27,27 @@ const Category = () => {
                 className="mySwiper"
             >
             <SwiperSlide className='relative'>
-                <img src={slide1} alt="" />
+                <img src={slide1} loading='lazy' alt="" />
                 <h3 className='absolute left-24 text-white bottom-16 text-2xl font-normal'>SALAD</h3>
             </SwiperSlide>
             <SwiperSlide className='relative'>
-                <img src={slide2} alt="" />
+                <img src={slide2} loading='lazy' alt="" />
                 <h3 className='absolute left-24 text-white bottom-16 text-2xl font-normal'>PIZZA</h3>
             </SwiperSlide>
             <SwiperSlide className='relative'>
-                <img src={slide3} alt="" />
+                <img src={slide3} loading='lazy' alt="" />
                 <h3 className='absolute left-24 text-white bottom-16 text-2xl font-normal'>SOUP</h3>
             </SwiperSlide>
             <SwiperSlide className='relative'>
-                <img src={slide3} alt="" />
+                <img src={slide3} loading='lazy' alt="" />
                 <h3 className='absolute left-24 text-white bottom-16 text-2xl font-normal'>SOUP</h3>
             </SwiperSlide>
             <SwiperSlide className='relative'>
-                <img src={slide4} alt="" />
+                <img src={slide4} loading='lazy' alt="" />
                 <h3 className='absolute left-24 text-white bottom-16 text-2xl font-normal'>DESSERT</h3>
             </SwiperSlide>
             <SwiperSlide className='relative'>
-                <img src={slide5} alt="" />
+                <img src={slide5} loading='lazy' alt="" />
                 <h3 className='absolute left-24 text-white bottom-16 text-2xl font-normal'>SALAD</h3>
             </SwiperSlide>
         </Swiper>
